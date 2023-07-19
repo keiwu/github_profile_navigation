@@ -195,11 +195,22 @@ fun SearchResult(githubViewModel: GithubViewModel, navigator: DestinationsNaviga
                         text = "Following: ${githubEvent.data.following}",
                         color = Color.Blue
                     )
+
+                    Text(
+                        modifier = Modifier.padding(all = 5.dp),
+                        text = "Description: ${githubEvent.data.bio}"
+                    )
                 }
             }
-            is GithubViewModel.GithubEvent.Failure ->
-                Log.d(TAG, "error keiwu" + githubEvent.errorText)
-
+            is GithubViewModel.GithubEvent.Failure -> {
+                Log.d(TAG, githubEvent.errorText)
+                if (githubEvent.errorText == ""){
+                    Text(
+                        modifier = Modifier.align(Center),
+                        text = "No user found"
+                    )
+                }
+            }
             is GithubViewModel.GithubEvent.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Center)
